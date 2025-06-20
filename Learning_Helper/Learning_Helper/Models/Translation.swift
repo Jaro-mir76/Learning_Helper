@@ -14,16 +14,16 @@ class Translation {
     @Attribute(.unique) var wordForm: String
     var tense: Tense
     var meaning: String
-    @Relationship(deleteRule: .cascade, inverse: \Sentence.translation) var sentences: [Sentence]
+    @Relationship(deleteRule: .cascade, inverse: \UsageExample.translation) var usageExamples: [UsageExample]
     var counterTest: Int
     var counterTestSuccess: Int
     
-    init(word: Word, wordForm: String, tense: Tense, meaning: String, sentences: [Sentence], counterTest: Int, counterTestSuccess: Int) {
+    init(word: Word, wordForm: String, tense: Tense, meaning: String, usageExamples: [UsageExample], counterTest: Int, counterTestSuccess: Int) {
         self.word = word
         self.wordForm = wordForm
         self.tense = tense
         self.meaning = meaning
-        self.sentences = sentences
+        self.usageExamples = usageExamples
         self.counterTest = counterTest
         self.counterTestSuccess = counterTestSuccess
     }

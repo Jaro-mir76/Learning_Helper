@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Sentence {
+class UsageExample {
     var translation: Translation
     var sentence: String
     
