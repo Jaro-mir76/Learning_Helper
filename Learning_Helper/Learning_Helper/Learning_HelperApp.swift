@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct Learning_HelperApp: App {
+    @State private var coordinationManager = CoordinationManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environment(coordinationManager)
         }
     }
 }
