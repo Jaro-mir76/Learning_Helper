@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class Translation {
-    var word: Word
+    var word: Word?
     @Attribute(.unique) var wordForm: String
     var tense: Tense
     var meaning: String
@@ -18,7 +18,7 @@ class Translation {
     var counterTest: Int
     var counterTestSuccess: Int
     
-    init(word: Word, wordForm: String, tense: Tense, meaning: String, usageExamples: [UsageExample], counterTest: Int, counterTestSuccess: Int) {
+    init(word: Word? = nil, wordForm: String, tense: Tense, meaning: String, usageExamples: [UsageExample] = [], counterTest: Int = 0, counterTestSuccess: Int = 0) {
         self.word = word
         self.wordForm = wordForm
         self.tense = tense

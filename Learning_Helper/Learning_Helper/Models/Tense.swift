@@ -11,8 +11,15 @@ import SwiftData
 @Model
 class Tense {
     @Attribute(.unique) var name: String
+    var tenseDescription: String?
     
-    init(name: String) {
+    init(name: String, tenseDescription: String? = nil) {
         self.name = name
+        self.tenseDescription = tenseDescription
     }
+}
+
+extension Tense {
+    static let presente = Tense(name: "Presente")
+    static let preterito = Tense(name: "Pretérito")
 }

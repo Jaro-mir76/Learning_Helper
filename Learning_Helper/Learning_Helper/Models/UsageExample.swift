@@ -10,11 +10,15 @@ import SwiftData
 
 @Model
 class UsageExample {
-    var translation: Translation
+    var translation: Translation?
     var sentence: String
+    var meaning: String
+    var exampleStatus: StatusCode.RawValue
     
-    init(translation: Translation, sentence: String) {
+    init(translation: Translation? = nil, sentence: String, meaning: String, exampleStatus: StatusCode) {
         self.translation = translation
         self.sentence = sentence
+        self.meaning = meaning
+        self.exampleStatus = exampleStatus.rawValue
     }
 }

@@ -16,3 +16,7 @@ class Language {
         self.name = name
     }
 }
+
+extension Language {
+    static let espanol = Language(name: "Español")
+}

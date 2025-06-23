@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6EA251372E08376A00FD7F9E /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA251362E08376000FD7F9E /* ToDo.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6EA250DB2E05828800FD7F9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		6EA250CC2E05828600FD7F9E /* Learning_Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Learning_Helper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA250DA2E05828800FD7F9E /* Learning_HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Learning_HelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA250E42E05828800FD7F9E /* Learning_HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Learning_HelperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EA251362E08376000FD7F9E /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		6EA250C32E05828600FD7F9E = {
 			isa = PBXGroup;
 			children = (
+				6EA251362E08376000FD7F9E /* ToDo.swift */,
 				6EA250CE2E05828600FD7F9E /* Learning_Helper */,
 				6EA250DD2E05828800FD7F9E /* Learning_HelperTests */,
 				6EA250E72E05828800FD7F9E /* Learning_HelperUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EA251372E08376A00FD7F9E /* ToDo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
