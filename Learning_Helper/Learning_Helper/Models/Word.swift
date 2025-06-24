@@ -32,14 +32,15 @@ extension Word {
                 Translation(
                     wordForm: "gracias",
                     tense: Tense.presente,
-                    meaning: "dziękuję",
+                    meaning: [Meaning(meaning: "dziękuję")],
                     usageExamples: [
                         UsageExample(
                             sentence: "Muchos gracias",
                             meaning: "Dziękuję bardzo",
                             exampleStatus: StatusCode.ok
                         )
-                    ]
+                    ],
+                    translationStatus: StatusCode.ok
                 )
             ]
         ),
@@ -50,7 +51,7 @@ extension Word {
                 Translation(
                     wordForm: "digo",
                     tense: Tense.presente,
-                    meaning: "mówię",
+                    meaning: [Meaning(meaning: "mówię")],
                     usageExamples: [
                         UsageExample(
                             sentence: "Yo digo ella algo importante.",
@@ -62,12 +63,13 @@ extension Word {
                             meaning: "Ja mówię a ty nie.",
                             exampleStatus: StatusCode.toBeVerified
                         )
-                    ]
+                    ],
+                    translationStatus: StatusCode.toBeVerified
                 ),
                 Translation(
                     wordForm: "dije",
                     tense: Tense.preterito,
-                    meaning: "powiedziałem",
+                    meaning: [Meaning(meaning: "powiedziałem")],
                     usageExamples: [
                         UsageExample(
                             sentence: "Yo dije ella algo importante.",
@@ -79,7 +81,8 @@ extension Word {
                             meaning: "Powiedziałem że nie mogę tego zrobić.",
                             exampleStatus: StatusCode.toBeVerified
                         )
-                    ]
+                    ],
+                    translationStatus: StatusCode.ok
                 )
             ]
         ),
@@ -90,19 +93,20 @@ extension Word {
                 Translation(
                     wordForm: "hago",
                     tense: Tense.presente,
-                    meaning: "robię",
+                    meaning: [Meaning(meaning: "robię")],
                     usageExamples: [
                         UsageExample(
                             sentence: "Yo digo ella algo importante.",
                             meaning: "Mówię jej coś ważnego.",
                             exampleStatus: StatusCode.ok
                         )
-                    ]
+                    ],
+                    translationStatus: StatusCode.ok
                 ),
                 Translation(
                     wordForm: "hice",
                     tense: Tense.preterito,
-                    meaning: "zrobiłem",
+                    meaning: [Meaning(meaning: "zrobiłem")],
                     usageExamples: [
                         UsageExample(
                             sentence: "Hice algo para me.",
@@ -114,7 +118,8 @@ extension Word {
                             meaning: "Zrobiłem co było potrzebne.",
                             exampleStatus: StatusCode.toBeVerified
                         )
-                    ]
+                    ],
+                    translationStatus: StatusCode.wrong
                 )
             ]
         )

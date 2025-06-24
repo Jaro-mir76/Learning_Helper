@@ -13,12 +13,13 @@ class Translation {
     var word: Word?
     @Attribute(.unique) var wordForm: String
     var tense: Tense
-    var meaning: String
+    @Relationship(deleteRule: .cascade, inverse: \Meaning.translation) var meaning: [Meaning]
     @Relationship(deleteRule: .cascade, inverse: \UsageExample.translation) var usageExamples: [UsageExample]
     var counterTest: Int
     var counterTestSuccess: Int
+    var translationStatus: StatusCode.RawValue
     
-    init(word: Word? = nil, wordForm: String, tense: Tense, meaning: String, usageExamples: [UsageExample] = [], counterTest: Int = 0, counterTestSuccess: Int = 0) {
+    init(word: Word? = nil, wordForm: String, tense: Tense, meaning: [Meaning] = [], usageExamples: [UsageExample] = [], counterTest: Int = 0, counterTestSuccess: Int = 0, translationStatus: StatusCode) {
         self.word = word
         self.wordForm = wordForm
         self.tense = tense
@@ -26,5 +27,6 @@ class Translation {
         self.usageExamples = usageExamples
         self.counterTest = counterTest
         self.counterTestSuccess = counterTestSuccess
+        self.translationStatus = translationStatus.rawValue
     }
 }

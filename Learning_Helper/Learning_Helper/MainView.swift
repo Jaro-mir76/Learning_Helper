@@ -15,23 +15,20 @@ struct MainView: View {
             @Bindable var coordinator = coordinationManager
             TabView(selection: $coordinator.activeTab) {
                 Tab(value: 1) {
-                    Label("Trenuj", systemImage: "brain.head.profile")
-                        .font(.title)
+                    TrainingMainView()
                 } label: {
                     Label("Trening", systemImage: "brain.head.profile")
 //                        .labelStyle(.titleOnly)
                 }
                 Tab(value: 2) {
-                    Label("Zadanie Domowe", systemImage: "book.pages.fill")
-                        .font(.title)
+                    HomeWorkMainView()
 
                 } label: {
                     Label("Zadanie domowe", systemImage: "book.pages.fill")
 //                        .labelStyle(.titleOnly)
                 }
                 Tab(value: 3) {
-                    Label("Twój słownik", systemImage: "text.book.closed.fill")
-                        .font(.title)
+                    DictionaryMainView()
 
                 } label: {
                     Label("Twój słownik", systemImage: "text.book.closed.fill")
