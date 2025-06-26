@@ -44,3 +44,8 @@ struct MainView: View {
     MainView()
         .environment(CoordinationManager())
 }
+
+#Preview("With some words", traits: .modifier(PreviewHelper())) {
+    MainView()
+        .environment(CoordinationManager())
+}

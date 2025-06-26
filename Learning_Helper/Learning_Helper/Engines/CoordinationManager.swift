@@ -6,12 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable
 class CoordinationManager {
     var activeTab: Int
+    var selectedWord: Word?
+    var navigationPathDictionary: NavigationPath
     
-    init(activeTab: Int = 1) {
+    init(activeTab: Int = 1, selectedWord: Word? = nil, navigationPathDictionary: NavigationPath = NavigationPath()) {
         self.activeTab = activeTab
+        self.selectedWord = selectedWord
+        self.navigationPathDictionary = navigationPathDictionary
     }
 }

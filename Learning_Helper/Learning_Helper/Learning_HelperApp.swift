@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Learning_HelperApp: App {
@@ -13,6 +14,10 @@ struct Learning_HelperApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .modelContainer(for: [
+                    Word.self,
+                    WordForm.self
+                ])
                 .environment(coordinationManager)
         }
     }

@@ -10,10 +10,12 @@ import SwiftData
 
 @Model
 class Tense {
+    @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
     var tenseDescription: String?
     
-    init(name: String, tenseDescription: String? = nil) {
+    init(id: UUID = UUID(), name: String, tenseDescription: String? = nil) {
+        self.id = id
         self.name = name
         self.tenseDescription = tenseDescription
     }

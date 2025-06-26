@@ -6,11 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TrainingMainView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var learningEngine = LearningEngine()
+    
     var body: some View {
-        Label("Trenuj", systemImage: "brain.head.profile")
-            .font(.title)
+        VStack {
+            Label("Trenuj", systemImage: "brain.head.profile")
+                .font(.title)
+            Button("Sprawdź") {
+                learningEngine.gatherStatistics(modelContext: modelContext)
+            }
+            .buttonStyle(.bordered)
+        }
     }
 }
 

@@ -10,10 +10,12 @@ import SwiftData
 
 @Model
 class Meaning {
-    var translation: Translation?
+    @Attribute(.unique) var id: UUID
+    var translation: WordForm?
     var meaning: String
     
-    init(translation: Translation? = nil, meaning: String) {
+    init(id: UUID = UUID(), translation: WordForm? = nil, meaning: String) {
+        self.id = id
         self.translation = translation
         self.meaning = meaning
     }

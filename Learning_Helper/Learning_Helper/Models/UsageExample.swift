@@ -10,12 +10,14 @@ import SwiftData
 
 @Model
 class UsageExample {
-    var translation: Translation?
+    @Attribute(.unique) var id: UUID
+    var translation: WordForm?
     var sentence: String
     var meaning: String
     var exampleStatus: StatusCode.RawValue
     
-    init(translation: Translation? = nil, sentence: String, meaning: String, exampleStatus: StatusCode) {
+    init(id: UUID = UUID(), translation: WordForm? = nil, sentence: String, meaning: String, exampleStatus: StatusCode) {
+        self.id = id
         self.translation = translation
         self.sentence = sentence
         self.meaning = meaning

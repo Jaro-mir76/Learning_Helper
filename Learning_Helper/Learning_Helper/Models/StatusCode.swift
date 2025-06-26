@@ -8,9 +8,10 @@
 import Foundation
 
 enum StatusCode: Int {
-    case ok = 0
-    case toBeVerified = 1
-    case corrected = 2
-    case wrong = 3
+    case new = 0
+    case ok
+    case toBeVerified
+    case corrected
+    case wrong
     
 }

@@ -9,17 +9,25 @@ import Foundation
 import SwiftData
 
 @Model
-class Word {
+class Word: Comparable {
+    @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
-    var language: Language
+    var language: Language?
     var category: Category?
-    @Relationship(deleteRule: .cascade, inverse: \Translation.word) var translations: [Translation]
+    @Relationship(deleteRule: .cascade, inverse: \WordForm.origin) var forms: [WordForm]
+//    @Transient var statistics: [LearningStatistics]?
     
-    init(name: String, language: Language, category: Category? = nil, translations: [Translation] = []) {
+    init(id: UUID = UUID(), name: String, language: Language? = nil, category: Category? = nil, translations: [WordForm] = []) {
+        self.id = id
         self.name = name
         self.language = language
         self.category = category
-        self.translations = translations
+        self.forms = translations
+//        self.statistics = statistics
+    }
+    
+    static func < (lhs: Word, rhs: Word) -> Bool {
+        return lhs.name < rhs.name
     }
 }
 
@@ -29,8 +37,8 @@ extension Word {
             name: "gracias",
             language: Language.espanol,
             translations: [
-                Translation(
-                    wordForm: "gracias",
+                WordForm(
+                    name: "gracias",
                     tense: Tense.presente,
                     meaning: [Meaning(meaning: "dziękuję")],
                     usageExamples: [
@@ -40,6 +48,9 @@ extension Word {
                             exampleStatus: StatusCode.ok
                         )
                     ],
+                    counterTest: 3,
+                    counterTestSuccess: 1,
+                    progressIndicator: 0.3,
                     translationStatus: StatusCode.ok
                 )
             ]
@@ -48,8 +59,8 @@ extension Word {
             name: "decir",
             language: Language.espanol,
             translations: [
-                Translation(
-                    wordForm: "digo",
+                WordForm(
+                    name: "digo",
                     tense: Tense.presente,
                     meaning: [Meaning(meaning: "mówię")],
                     usageExamples: [
@@ -64,10 +75,13 @@ extension Word {
                             exampleStatus: StatusCode.toBeVerified
                         )
                     ],
+                    counterTest: 4,
+                    counterTestSuccess: 1,
+                    progressIndicator: 0.25,
                     translationStatus: StatusCode.toBeVerified
                 ),
-                Translation(
-                    wordForm: "dije",
+                WordForm(
+                    name: "dije",
                     tense: Tense.preterito,
                     meaning: [Meaning(meaning: "powiedziałem")],
                     usageExamples: [
@@ -82,6 +96,9 @@ extension Word {
                             exampleStatus: StatusCode.toBeVerified
                         )
                     ],
+                    counterTest: 5,
+                    counterTestSuccess: 1,
+                    progressIndicator: 0.2,
                     translationStatus: StatusCode.ok
                 )
             ]
@@ -90,8 +107,8 @@ extension Word {
             name: "hacer",
             language: Language.espanol,
             translations: [
-                Translation(
-                    wordForm: "hago",
+                WordForm(
+                    name: "hago",
                     tense: Tense.presente,
                     meaning: [Meaning(meaning: "robię")],
                     usageExamples: [
@@ -103,8 +120,8 @@ extension Word {
                     ],
                     translationStatus: StatusCode.ok
                 ),
-                Translation(
-                    wordForm: "hice",
+                WordForm(
+                    name: "hice",
                     tense: Tense.preterito,
                     meaning: [Meaning(meaning: "zrobiłem")],
                     usageExamples: [
@@ -119,6 +136,9 @@ extension Word {
                             exampleStatus: StatusCode.toBeVerified
                         )
                     ],
+                    counterTest: 10,
+                    counterTestSuccess: 1,
+                    progressIndicator: 0.1,
                     translationStatus: StatusCode.wrong
                 )
             ]
