@@ -19,4 +19,10 @@ class Meaning {
         self.translation = translation
         self.meaning = meaning
     }
+    
+    init(id: UUID = UUID(), otherMeaning: Meaning){
+        self.id = id
+        self.translation = otherMeaning.translation
+        self.meaning = otherMeaning.meaning
+    }
 }

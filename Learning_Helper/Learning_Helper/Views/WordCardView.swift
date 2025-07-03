@@ -28,7 +28,7 @@ struct WordCardView: View {
                 HStack {
                     Text("\(form.name): ")
                         .font(.headline)
-                    Text(labelFor(form.meanings.map({ $0.meaning })))
+                    Text(form.meanings.map({ $0.meaning }).joined(separator: ", "))
                     Spacer()
                 }
                 if showExamples {
@@ -41,19 +41,6 @@ struct WordCardView: View {
                 }
             }
         }
-        .padding(5)
-    }
-    
-    private func labelFor (_ meanings: [String]) -> String {
-        var result = ""
-        let numberOfMeanings = meanings.count
-        for (n, meaning) in meanings.enumerated() {
-            result += meaning
-            if n < numberOfMeanings - 1 {
-                result += ", "
-            }
-        }
-        return result
     }
 }
 

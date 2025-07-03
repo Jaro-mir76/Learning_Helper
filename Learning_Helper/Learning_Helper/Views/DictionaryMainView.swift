@@ -13,19 +13,56 @@ struct DictionaryMainView: View {
     @Environment(CoordinationManager.self) private var coordinationManager
     @Query(sort: \Word.name) private var words: [Word]
 //    @State private var showEditView: Bool = false
+//    @State private var addNewWord: Bool = false
+//    @State private var newWord: Word = Word(name: "")
     
     var body: some View {
         @Bindable var coordinationManager = coordinationManager
         
         NavigationStack(path: $coordinationManager.navigationPathDictionary) {
-            Label("Twój słownik", systemImage: "text.book.closed.fill")
-                .font(.title)
-            LazyVStack {
-                ForEach(words, id: \.id) { word in
-                    WordCardView(word: word)
+            VStack {
+                Label("Twój słownik", systemImage: "text.book.closed.fill")
+                    .font(.title)
+                List {
+                    ForEach(words, id: \.id) { word in
+                        WordCardView(word: word)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                Button{
+                                    editWord(word)
+                                }label: {
+                                    Label("Edit word", systemImage: "pencil")
+                                        .labelStyle(.iconOnly)
+                                }
+                                .tint(.green)
+                            }
+                            .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                                Button {
+                                    deleteWord(word)
+                                } label: {
+                                    Label("Delete word", systemImage: "x.circle.fill")
+                                        .labelStyle(.iconOnly)
+                                }
+                                .tint(.red)
+                            }
+                    }
+                }
+                Spacer()
+            }
+            .navigationDestination(for: Word.self) { word in
+                WordEditView(word: word)
+            }
+            .navigationDestination(for: WordForm.self) { wordForm in
+                WordFormEditView(wordForm: wordForm)
+            }
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button {
+                        addWord()
+                    } label: {
+                        Label("Add word", systemImage: "plus")
+                    }
                 }
             }
-            Spacer()
             .task {
                 if words.isEmpty {
                     Word.examples.forEach { word in
@@ -33,26 +70,24 @@ struct DictionaryMainView: View {
                     }
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
-                    NavigationLink(destination: WordEditView(word: nil)) {
-                        Label("Add word", systemImage: "plus")
-                    }
-//                    Button {
-////                        showEditView.toggle()
-//                        
-//                    } label: {
-//                        Label("Add word", systemImage: "plus")
-//                    }
-                }
-            }
-//            .sheet(isPresented: $showEditView) {
-//                WordEditView(word: coordinationManager.selectedWord)
-//            }
-            .navigationDestination(for: Word.self) { word in
-                WordEditView(word: coordinationManager.selectedWord)
-            }
         }
+    }
+    
+    private func editWord(_ word: Word) {
+        coordinationManager.selectedWord = word
+//        var wordCopy = Word(name: "")
+//        wordCopy.copy(word)
+        coordinationManager.navigationPathDictionary.append(word)
+    }
+    
+    private func deleteWord(_ word: Word) {
+        modelContext.delete(word)
+        try? modelContext.save()
+    }
+    
+    private func addWord() {
+        let newWord = Word(name: "")
+        coordinationManager.navigationPathDictionary.append(newWord)
     }
 }
 

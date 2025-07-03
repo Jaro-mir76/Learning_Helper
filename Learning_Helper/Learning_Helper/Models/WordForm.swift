@@ -33,4 +33,25 @@ class WordForm {
         self.progressIndicator = progressIndicator
         self.translationStatus = translationStatus.rawValue
     }
+    
+    init(id: UUID = UUID(), otherWordForm: WordForm){
+        self.id = id
+        self.origin = otherWordForm.origin
+        self.name = otherWordForm.name
+        self.tense = otherWordForm.tense
+        var tmpMeanings: [Meaning] = []
+        for meaning in otherWordForm.meanings {
+            tmpMeanings.append(Meaning(otherMeaning: meaning))
+        }
+        self.meanings = tmpMeanings
+        var tmpExamples: [UsageExample] = []
+        for example in otherWordForm.usageExamples {
+            tmpExamples.append(UsageExample(otherUsageExample: example))
+        }
+        self.usageExamples = tmpExamples
+        self.counterTest = otherWordForm.counterTest
+        self.counterTestSuccess = otherWordForm.counterTestSuccess
+        self.progressIndicator = otherWordForm.progressIndicator
+        self.translationStatus = otherWordForm.translationStatus
+    }
 }

@@ -11,7 +11,6 @@ struct MainView: View {
     @Environment(CoordinationManager.self) private var coordinationManager    
     
     var body: some View {
-        NavigationStack {
             @Bindable var coordinator = coordinationManager
             TabView(selection: $coordinator.activeTab) {
                 Tab(value: 1) {
@@ -27,6 +26,7 @@ struct MainView: View {
                     Label("Zadanie domowe", systemImage: "book.pages.fill")
 //                        .labelStyle(.titleOnly)
                 }
+                .badge(Text("\(coordinationManager.navigationPathDictionary.isEmpty ? "empty" : "not empty")"))
                 Tab(value: 3) {
                     DictionaryMainView()
 
@@ -34,9 +34,10 @@ struct MainView: View {
                     Label("Twój słownik", systemImage: "text.book.closed.fill")
 //                        .labelStyle(.titleOnly)
                 }
+                .badge(coordinationManager.navigationPathDictionary.count)
             }
+
 //            .tabViewStyle(.automatic)
-        }
     }
 }
 

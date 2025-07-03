@@ -20,7 +20,7 @@ class LearningEngine {
         if let wordForms {
             for translation in wordForms {
 //                print("translation id: \(translation.id) translation \(translation.name)")
-                let stats = LearningStatistics(translationID: translation.id, counterTests: translation.counterTest, counterSuccess: translation.counterTestSuccess, progressIndicator: translation.progressIndicator)
+                let stats = LearningStatistics(wordFormID: translation.id, counterTests: translation.counterTest, counterSuccess: translation.counterTestSuccess, progressIndicator: translation.progressIndicator)
                 self.statistics.append(stats)
             }
         }

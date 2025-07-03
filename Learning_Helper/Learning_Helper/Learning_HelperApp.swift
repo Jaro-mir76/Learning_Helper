@@ -14,10 +14,11 @@ struct Learning_HelperApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .modelContainer(for: [
-                    Word.self,
-                    WordForm.self
-                ])
+                .modelContainer(for: [Word.self, WordForm.self], isAutosaveEnabled: true, isUndoEnabled: false)
+//                .modelContainer(for: [
+//                    Word.self,
+//                    WordForm.self
+//                ])
                 .environment(coordinationManager)
         }
     }

@@ -12,11 +12,21 @@ import SwiftData
 class Category {
     @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
-    var categoryDescription: String
+    var categoryDescription: String?
     
-    init(id: UUID = UUID(), name: String, categoryDescription: String) {
+    init(id: UUID = UUID(), name: String, categoryDescription: String? = nil) {
         self.id = id
         self.name = name
         self.categoryDescription = categoryDescription
     }
+    
+    init(id: UUID = UUID(), otherCategory: Category) {
+        self.id = id
+        self.name = otherCategory.name
+        self.categoryDescription = otherCategory.categoryDescription
+    }
+}
+
+extension Category {
+    static let myWords = Category(name: "My words", categoryDescription: "Wszystkie słówka które potrzebuje trenować.")
 }

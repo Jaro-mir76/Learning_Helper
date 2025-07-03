@@ -23,4 +23,12 @@ class UsageExample {
         self.meaning = meaning
         self.exampleStatus = exampleStatus.rawValue
     }
+    
+    init (id: UUID = UUID(), otherUsageExample: UsageExample) {
+        self.id = id
+        self.translation = otherUsageExample.translation
+        self.sentence = otherUsageExample.sentence
+        self.meaning = otherUsageExample.meaning
+        self.exampleStatus = otherUsageExample.exampleStatus
+    }
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 struct LearningStatistics {
-    var translationID: UUID
+    var wordFormID: UUID
     var counterTests: Int
     var counterSuccess: Int
     var progressIndicator: Double

@@ -19,6 +19,12 @@ class Tense {
         self.name = name
         self.tenseDescription = tenseDescription
     }
+    
+    init(id: UUID = UUID(), otherTense: Tense){
+        self.id = id
+        self.name = otherTense.name
+        self.tenseDescription = otherTense.tenseDescription
+    }
 }
 
 extension Tense {

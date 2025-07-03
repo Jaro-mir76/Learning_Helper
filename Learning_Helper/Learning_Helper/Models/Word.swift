@@ -17,30 +17,68 @@ class Word: Comparable {
     @Relationship(deleteRule: .cascade, inverse: \WordForm.origin) var forms: [WordForm]
 //    @Transient var statistics: [LearningStatistics]?
     
-    init(id: UUID = UUID(), name: String, language: Language? = nil, category: Category? = nil, translations: [WordForm] = []) {
+    init(id: UUID = UUID(), name: String, language: Language? = nil, category: Category? = nil, forms: [WordForm] = []) {
         self.id = id
         self.name = name
         self.language = language
         self.category = category
-        self.forms = translations
+        self.forms = forms
 //        self.statistics = statistics
     }
     
     static func < (lhs: Word, rhs: Word) -> Bool {
         return lhs.name < rhs.name
     }
+    
+    func copy(_ from: Word) {
+        self.id = from.id
+        self.name = from.name
+        if let language = from.language {
+            self.language = Language(otherLanguage: language)
+        } else {
+            self.language = nil
+        }
+        if let category = from.category {
+            self.category = Category(otherCategory: category)
+        } else {
+            self.category = nil
+        }
+        self.forms = []
+        for form in from.forms {
+            self.forms.append(WordForm(otherWordForm: form))
+        }
+    }
 }
 
 extension Word {
     static let examples: [Word] = [
         Word(
-            name: "gracias",
+            name: "gracia",
             language: Language.espanol,
-            translations: [
+            forms: [
                 WordForm(
                     name: "gracias",
                     tense: Tense.presente,
                     meaning: [Meaning(meaning: "dziękuję")],
+                    usageExamples: [
+                        UsageExample(
+                            sentence: "Muchos gracias",
+                            meaning: "Dziękuję bardzo",
+                            exampleStatus: StatusCode.ok
+                        )
+                    ],
+                    counterTest: 3,
+                    counterTestSuccess: 1,
+                    progressIndicator: 0.3,
+                    translationStatus: StatusCode.ok
+                ),
+                WordForm(
+                    name: "gracia",
+                    tense: Tense.presente,
+                    meaning: [
+                        Meaning(meaning: "łaska"),
+                        Meaning(meaning: "uprzejmość")
+                    ],
                     usageExamples: [
                         UsageExample(
                             sentence: "Muchos gracias",
@@ -58,7 +96,7 @@ extension Word {
         Word(
             name: "decir",
             language: Language.espanol,
-            translations: [
+            forms: [
                 WordForm(
                     name: "digo",
                     tense: Tense.presente,
@@ -106,7 +144,7 @@ extension Word {
         Word(
             name: "hacer",
             language: Language.espanol,
-            translations: [
+            forms: [
                 WordForm(
                     name: "hago",
                     tense: Tense.presente,

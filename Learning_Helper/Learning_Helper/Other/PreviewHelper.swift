@@ -22,10 +22,23 @@ struct PreviewHelper: PreviewModifier {
         let english = Language(name: "English")
         let polish = Language(name: "Polski")
         
+        let myWords = Category(name: "My words", categoryDescription: "all my words I need")
+        let book = Category(name: "Book", categoryDescription: "Words from book.")
+        
+        let preterito = Tense.preterito
+        let presente = Tense.presente
+        
         Task { @MainActor in
+            modelContainer.mainContext.insert(preterito)
+            modelContainer.mainContext.insert(presente)
+            
+            modelContainer.mainContext.insert(myWords)
+            modelContainer.mainContext.insert(book)
+            
             modelContainer.mainContext.insert(espanol)
             modelContainer.mainContext.insert(english)
             modelContainer.mainContext.insert(polish)
+            
             modelContainer.mainContext.insert(Word.examples[0])
             modelContainer.mainContext.insert(Word.examples[1])
             modelContainer.mainContext.insert(Word.examples[2])

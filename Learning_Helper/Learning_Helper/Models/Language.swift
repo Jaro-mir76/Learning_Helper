@@ -17,6 +17,11 @@ class Language: Identifiable {
         self.id = id
         self.name = name
     }
+    
+    init(id: UUID = UUID(), otherLanguage: Language) {
+        self.id = id
+        self.name = otherLanguage.name
+    }
 }
 
 extension Language {
