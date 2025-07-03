@@ -87,6 +87,7 @@ struct DictionaryMainView: View {
     
     private func addWord() {
         let newWord = Word(name: "")
+        modelContext.insert(newWord)
         coordinationManager.navigationPathDictionary.append(newWord)
     }
 }
