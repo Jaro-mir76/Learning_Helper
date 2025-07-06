@@ -11,14 +11,21 @@ import SwiftData
 struct DictionaryMainView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(CoordinationManager.self) private var coordinationManager
-    @Query(sort: \Word.name) private var words: [Word]
+    @Query(sort: \Word.name, order: .forward) private var words: [Word]
+    
+//    init() {
+//     
+//    }
 //    @State private var showEditView: Bool = false
 //    @State private var addNewWord: Bool = false
 //    @State private var newWord: Word = Word(name: "")
     
     var body: some View {
         @Bindable var coordinationManager = coordinationManager
-        
+//        let _ = print("dictionary main view, words count: \(words.count)")
+//        ForEach(words) {
+//            let _ = print ("main dictionary view - word: \($0.name)")
+//        }
         NavigationStack(path: $coordinationManager.navigationPathDictionary) {
             VStack {
                 Label("Twój słownik", systemImage: "text.book.closed.fill")
@@ -87,7 +94,7 @@ struct DictionaryMainView: View {
     
     private func addWord() {
         let newWord = Word(name: "")
-        modelContext.insert(newWord)
+//        modelContext.insert(newWord)
         coordinationManager.navigationPathDictionary.append(newWord)
     }
 }
@@ -97,7 +104,7 @@ struct DictionaryMainView: View {
         .environment(CoordinationManager())
 }
 
-#Preview("With some words", traits: .modifier(PreviewHelper()), body: {
+#Preview("With some words", traits: .modifier(PreviewHelper())) {
     DictionaryMainView()
         .environment(CoordinationManager())
-})
+}

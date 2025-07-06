@@ -14,16 +14,17 @@ struct LanguagePickerView: View {
     
     var body: some View {
         HStack{
-            Text("Language")
-            Spacer()
+//            Text("Language")
+//            Spacer()
             NavigationLink(destination: LanguageList(language: $language), label: {
-                Spacer()
-                Text("\(language == nil ? "You need to choose language." : language!.name )")
+//                Spacer()
+                Text("\(language == nil ? "choose language" : language!.name )")
                     .foregroundStyle(language == nil ? .red : .blue)
+                    .font(.callout)
             })
         }
         .onAppear {
-//                addDefaultLanguage()
+                addDefaultLanguage()
         }
     }
     

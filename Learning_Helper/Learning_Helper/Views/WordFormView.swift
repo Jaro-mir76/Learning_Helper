@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WordFormView: View {
+    @Environment(CoordinationManager.self) private var coordinationManager
     @State private var editMode: Bool = false
     var wordForm: WordForm
     
@@ -25,10 +26,18 @@ struct WordFormView: View {
 //            Label("Edit", systemImage: "pencil")
 //                .labelStyle(.titleOnly)
 //        }
-        NavigationLink(value: wordForm) {
+//        NavigationLink(value: wordForm) {
+//            Label("Edit", systemImage: "pencil")
+//                .labelStyle(.titleOnly)
+//        }
+        Button {
+            coordinationManager.navigationPathDictionary.append(wordForm)
+        } label: {
             Label("Edit", systemImage: "pencil")
                 .labelStyle(.titleOnly)
         }
+        .buttonStyle(.bordered)
+
         Section{
             HStack {
                 Text("Name:")
@@ -57,4 +66,5 @@ struct WordFormView: View {
 
 #Preview {
     WordFormView(wordForm: Word.examples[1].forms[0])
+        .environment(CoordinationManager())
 }

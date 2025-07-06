@@ -14,16 +14,17 @@ struct CategoryPickerView: View {
     
     var body: some View {
         HStack{
-            Text("Category")
-            Spacer()
+//            Text("Category")
+//            Spacer()
             NavigationLink(destination: CategoryListView (category: $category), label: {
-                Spacer()
-                Text("\(category == nil ? "You need to choose category." : category!.name )")
+//                Spacer()
+                Text("\(category == nil ? "choose category" : category!.name )")
                     .foregroundStyle(category == nil ? .red : .blue)
+                    .font(.callout)
             })
         }
         .onAppear {
-//                addDefaultLanguage()
+                addDefaultLanguage()
         }
     }
     

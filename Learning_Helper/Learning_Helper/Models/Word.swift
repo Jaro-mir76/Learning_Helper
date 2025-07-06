@@ -103,12 +103,12 @@ extension Word {
                     meaning: [Meaning(meaning: "mówię")],
                     usageExamples: [
                         UsageExample(
-                            sentence: "Yo digo ella algo importante.",
+                            sentence: "Yo le digo a ella algo importante.",
                             meaning: "Mówię jej coś ważnego.",
                             exampleStatus: StatusCode.ok
                         ),
                         UsageExample(
-                            sentence: "Yo digo y tu no.",
+                            sentence: "Yo digo algo y tu no.",
                             meaning: "Ja mówię a ty nie.",
                             exampleStatus: StatusCode.toBeVerified
                         )

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct TestView: View {
-    @Bindable var word: Word
+//    @Bindable var word: Word
     var body: some View {
-        Text("Hello, here is \(word.name)")
+        Text("Hello, wolrd!")
+            .modifier(BoxView())
+            
     }
 }
 
 #Preview {
-    TestView(word: Word.examples[0])
+    TestView()
 }
