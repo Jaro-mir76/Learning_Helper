@@ -11,6 +11,7 @@ struct WordFormView: View {
     @Environment(CoordinationManager.self) private var coordinationManager
     @State private var editMode: Bool = false
     var wordForm: WordForm
+    @Binding var showExample: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -39,20 +40,22 @@ struct WordFormView: View {
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             .boxView()
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Usage examples")
-                        .font(.footnote)
-                        .padding(EdgeInsets(top: 5, leading: 0, bottom: -5, trailing: 0))
-                    ForEach(wordForm.usageExamples, id: \.id) { example in
-                        Divider()
-                        VStack(alignment: .leading) {
-                            Text(example.sentence)
-                            Text(example.meaning)
+            if showExample, !wordForm.usageExamples.isEmpty {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Usage examples")
+                            .font(.footnote)
+                            .padding(EdgeInsets(top: 5, leading: 0, bottom: -5, trailing: 0))
+                        ForEach(wordForm.usageExamples, id: \.id) { example in
+                            Divider()
+                            VStack(alignment: .leading) {
+                                Text(example.sentence)
+                                Text(example.meaning)
+                            }
                         }
                     }
+                    Spacer()
                 }
-                Spacer()
             }
         }
 //        HStack {
@@ -64,7 +67,7 @@ struct WordFormView: View {
 }
 
 #Preview {
-    WordFormView(wordForm: Word.examples[1].forms[0])
+    WordFormView(wordForm: Word.examples[1].forms[0], showExample: .constant(true))
         .environment(CoordinationManager())
 }
 

@@ -16,6 +16,7 @@ struct WordEditView: View {
     @Bindable var word: Word
     @FocusState private var wordIsFocused: Bool
     @State private var wordExist: Bool = false
+    @State private var showExamples: Bool = false
     
     init (word: Word) {
         self.word = word
@@ -58,20 +59,40 @@ struct WordEditView: View {
                 
 //            }
 //            Section {
-                Button {
-                    addNewForm()
-                } label: {
-                    Label("Add new form", systemImage: "plus")
-                        .labelStyle(.titleOnly)
-                }
-                .buttonStyle(.bordered)
+            
+//                Button {
+//                    addNewForm()
+//                } label: {
+//                    Label("Add new form", systemImage: "plus")
+//                        .labelStyle(.titleOnly)
+//                }
+//                .buttonStyle(.bordered)
+            
 //            }
 //            .modifier(BoxView())
             ForEach(word.forms, id:\.id) { wordForm in
-                WordFormView(wordForm: wordForm)
+                WordFormView(wordForm: wordForm, showExample: $showExamples)
             }
         }
         .padding()
+        HStack {
+            Button {
+                addNewForm()
+            } label: {
+                Label("Add new form", systemImage: "plus")
+                    .labelStyle(.titleOnly)
+            }
+            .buttonStyle(.bordered)
+            Button {
+                withAnimation {
+                    showExamples.toggle()
+                }
+                
+            } label: {
+                Text("\(showExamples ? "Hide examples" : "Show examples")")
+            }
+            .buttonStyle(.bordered)
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text(windowTitle)
