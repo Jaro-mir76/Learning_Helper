@@ -12,15 +12,18 @@ import SwiftData
 class Language: Identifiable {
     @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
+    @Attribute(.unique) var flag: String?
     
-    init(id: UUID = UUID(), name: String) {
+    init(id: UUID = UUID(), name: String, flag: String? = nil) {
         self.id = id
         self.name = name
+        self.flag = flag
     }
     
     init(id: UUID = UUID(), otherLanguage: Language) {
         self.id = id
         self.name = otherLanguage.name
+        self.flag = otherLanguage.flag
     }
 }
 

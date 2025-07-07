@@ -11,17 +11,29 @@ import SwiftData
 struct LanguagePickerView: View {
     @Environment(CoordinationManager.self) private var coordinationManager
     @Binding var language: Language?
+    @State private var presentingLanguageList: Bool = false
     
     var body: some View {
         HStack{
 //            Text("Language")
 //            Spacer()
-            NavigationLink(destination: LanguageList(language: $language), label: {
-//                Spacer()
-                Text("\(language == nil ? "choose language" : language!.name )")
-                    .foregroundStyle(language == nil ? .red : .blue)
-                    .font(.callout)
-            })
+//            NavigationLink(destination: LanguageList(language: $language), label: {
+////                Spacer()
+//                Text("\(language == nil ? "choose language" : language!.name )")
+//                    .foregroundStyle(language == nil ? .red : .blue)
+//                    .font(.callout)
+//            })
+//            Label("\(language == nil ? "choose language" : language!.name )", systemImage: "flag")
+//                .labelStyle(.iconOnly)
+            Text("\(language == nil ? "choose language" : language!.name )")
+                .foregroundStyle(language == nil ? .red : .blue)
+                .font(.callout)
+                .onTapGesture {
+                    presentingLanguageList.toggle()
+                }
+        }
+        .navigationDestination(isPresented: $presentingLanguageList) {
+            LanguageList(language: $language)
         }
         .onAppear {
                 addDefaultLanguage()

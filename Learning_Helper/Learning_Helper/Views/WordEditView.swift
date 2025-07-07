@@ -28,10 +28,11 @@ struct WordEditView: View {
     }
     
     var body: some View {
-        List {
-            Section {
+        ScrollView {
+//            Section {
                 HStack {
                     TextField("your new word", text: $word.name )
+                        .textFieldStyle(.roundedBorder)
                         .focused($wordIsFocused)
                         .foregroundStyle(wordExist ? .red : .primary)
                         .onChange(of: word.name, initial: true) {
@@ -44,29 +45,33 @@ struct WordEditView: View {
                         Button {
                             loadExistingWord()
                         } label: {
-                            Label("Load existing", systemImage: "square.and.arrow.down")
+                            Label("Switch to existing", systemImage: "square.and.arrow.down")
                                 .labelStyle(.titleOnly)
                         }
                     }
                 }
                 HStack {
                     LanguagePickerView(language: $word.language)
+                    Spacer()
                     CategoryPickerView(category: $word.category)
                 }
                 
-            }
-            Section {
+//            }
+//            Section {
                 Button {
                     addNewForm()
                 } label: {
                     Label("Add new form", systemImage: "plus")
+                        .labelStyle(.titleOnly)
                 }
-            }
+                .buttonStyle(.bordered)
+//            }
 //            .modifier(BoxView())
             ForEach(word.forms, id:\.id) { wordForm in
                 WordFormView(wordForm: wordForm)
             }
         }
+        .padding()
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text(windowTitle)
@@ -134,6 +139,8 @@ struct WordEditView: View {
             if !coordinationManager.navigationPathDictionary.isEmpty {
                 coordinationManager.navigationPathDictionary.removeLast()
             }
+            modelContext.delete(word)
+            try? modelContext.save()
             coordinationManager.navigationPathDictionary.append(existingWord)
         }
     }

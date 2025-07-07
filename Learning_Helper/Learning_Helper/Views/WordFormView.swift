@@ -13,58 +13,64 @@ struct WordFormView: View {
     var wordForm: WordForm
     
     var body: some View {
-//        Button {
-//            editMode.toggle()
-//        } label: {
-//            Label(editMode ? "View mode" : "Edit mode", systemImage: "pencil")
-//                .labelStyle(.titleOnly)
-//        }
-//        if editMode {
-//            WordFormEditView(wordForm: wordForm)
-//        } else {
-//        NavigationLink(destination: WordFormEditView(wordForm: wordForm)) {
-//            Label("Edit", systemImage: "pencil")
-//                .labelStyle(.titleOnly)
-//        }
-//        NavigationLink(value: wordForm) {
-//            Label("Edit", systemImage: "pencil")
-//                .labelStyle(.titleOnly)
-//        }
-        Button {
-            coordinationManager.navigationPathDictionary.append(wordForm)
-        } label: {
-            Label("Edit", systemImage: "pencil")
-                .labelStyle(.titleOnly)
-        }
-        .buttonStyle(.bordered)
-
-        Section{
-            HStack {
-                Text("Name:")
-                Spacer()
-                Text(wordForm.name)
-            }
-            HStack {
-                Text("Meannings:")
-                Spacer()
-                Text(wordForm.meanings.map({$0.meaning}).joined(separator: ", "))
-            }
-        } header: {
-            Text("Tense: \(wordForm.tense?.name ?? "")")
-        }
-        Section(header: Text("Usage examples")) {
-            ForEach(wordForm.usageExamples, id: \.id) { example in
+        VStack(alignment: .leading) {
+        Text("Tense: \(wordForm.tense?.name ?? "")")
+            .font(.footnote)
+            .padding(EdgeInsets(top: 5, leading: 0, bottom: -5, trailing: 0))
+            
+//            .padding(.leading, 4)
+            HStack(alignment: .center) {
+                
                 VStack(alignment: .leading) {
-                    Text(example.sentence)
-                    Text(example.meaning)
+                    
+                    Text(wordForm.name)
+                        .textCase(.uppercase).bold()
+                    Text(wordForm.meanings.map({$0.meaning}).joined(separator: ", "))
+//                        .padding(.leading, 10)
                 }
+                Spacer()
+                Button {
+                    coordinationManager.navigationPathDictionary.append(wordForm)
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                        .labelStyle(.iconOnly)
+                }
+                .buttonStyle(.bordered)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            }
+            .boxView()
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Usage examples")
+                        .font(.footnote)
+                        .padding(EdgeInsets(top: 5, leading: 0, bottom: -5, trailing: 0))
+                    ForEach(wordForm.usageExamples, id: \.id) { example in
+                        Divider()
+                        VStack(alignment: .leading) {
+                            Text(example.sentence)
+                            Text(example.meaning)
+                        }
+                    }
+                }
+                Spacer()
             }
         }
+//        HStack {
+//            Text(wordForm.meanings.map({$0.meaning}).joined(separator: ", "))
+//            Spacer()
 //        }
+        
     }
 }
 
 #Preview {
     WordFormView(wordForm: Word.examples[1].forms[0])
         .environment(CoordinationManager())
+}
+
+private struct wordFormListView: View {
+    var wordForm: WordForm
+    var body: some View {
+        
+    }
 }

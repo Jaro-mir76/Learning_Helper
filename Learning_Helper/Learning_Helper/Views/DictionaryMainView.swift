@@ -13,19 +13,12 @@ struct DictionaryMainView: View {
     @Environment(CoordinationManager.self) private var coordinationManager
     @Query(sort: \Word.name, order: .forward) private var words: [Word]
     
-//    init() {
-//     
-//    }
 //    @State private var showEditView: Bool = false
 //    @State private var addNewWord: Bool = false
 //    @State private var newWord: Word = Word(name: "")
     
     var body: some View {
         @Bindable var coordinationManager = coordinationManager
-//        let _ = print("dictionary main view, words count: \(words.count)")
-//        ForEach(words) {
-//            let _ = print ("main dictionary view - word: \($0.name)")
-//        }
         NavigationStack(path: $coordinationManager.navigationPathDictionary) {
             VStack {
                 Label("Twój słownik", systemImage: "text.book.closed.fill")

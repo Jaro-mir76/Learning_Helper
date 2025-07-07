@@ -11,17 +11,27 @@ import SwiftData
 struct CategoryPickerView: View {
     @Environment(CoordinationManager.self) private var coordinationManager
     @Binding var category: Category?
+    @State private var presentingCategoryList: Bool = false
     
     var body: some View {
         HStack{
 //            Text("Category")
 //            Spacer()
-            NavigationLink(destination: CategoryListView (category: $category), label: {
-//                Spacer()
-                Text("\(category == nil ? "choose category" : category!.name )")
-                    .foregroundStyle(category == nil ? .red : .blue)
-                    .font(.callout)
-            })
+//            NavigationLink(destination: CategoryListView (category: $category), label: {
+////                Spacer()
+//                Text("\(category == nil ? "choose category" : category!.name )")
+//                    .foregroundStyle(category == nil ? .red : .blue)
+//                    .font(.callout)
+//            })
+            Text("\(category == nil ? "choose category" : category!.name )")
+                .foregroundStyle(category == nil ? .red : .blue)
+                .font(.callout)
+                .onTapGesture {
+                    presentingCategoryList.toggle()
+                }
+        }
+        .navigationDestination(isPresented: $presentingCategoryList) {
+            CategoryListView(category: $category)
         }
         .onAppear {
                 addDefaultLanguage()
