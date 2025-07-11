@@ -9,19 +9,19 @@ import Foundation
 import SwiftData
 
 @Model
-class Category {
-    @Attribute(.unique) var id: UUID
+final class Category: Sendable {
+    @Attribute(.unique) var myId: UUID
     @Attribute(.unique) var name: String
     var categoryDescription: String?
     
-    init(id: UUID = UUID(), name: String, categoryDescription: String? = nil) {
-        self.id = id
+    init(myId: UUID = UUID(), name: String, categoryDescription: String? = nil) {
+        self.myId = myId
         self.name = name
         self.categoryDescription = categoryDescription
     }
     
-    init(id: UUID = UUID(), otherCategory: Category) {
-        self.id = id
+    init(myId: UUID = UUID(), otherCategory: Category) {
+        self.myId = myId
         self.name = otherCategory.name
         self.categoryDescription = otherCategory.categoryDescription
     }

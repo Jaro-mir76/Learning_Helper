@@ -63,13 +63,13 @@ struct DictionaryMainView: View {
                     }
                 }
             }
-            .task {
-                if words.isEmpty {
-                    Word.examples.forEach { word in
-                        modelContext.insert(word)
-                    }
-                }
-            }
+//            .task {
+//                if words.isEmpty {
+//                    Word.examples.forEach { word in
+//                        modelContext.insert(word)
+//                    }
+//                }
+//            }
         }
     }
     

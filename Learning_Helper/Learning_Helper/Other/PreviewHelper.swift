@@ -28,6 +28,9 @@ struct PreviewHelper: PreviewModifier {
         let preterito = Tense.preterito
         let presente = Tense.presente
         
+        let tag1 = Tag(tagName: "#book", tagIcon: "book", tagColor: ColorData.green)
+        let tag2 = Tag(tagName: "#important", tagIcon: "exclamationmark.triangle.fill", tagColor: ColorData.red)
+        
         Task { @MainActor in
             modelContainer.mainContext.insert(preterito)
             modelContainer.mainContext.insert(presente)
@@ -38,6 +41,9 @@ struct PreviewHelper: PreviewModifier {
             modelContainer.mainContext.insert(espanol)
             modelContainer.mainContext.insert(english)
             modelContainer.mainContext.insert(polish)
+            
+            modelContainer.mainContext.insert(tag1)
+            modelContainer.mainContext.insert(tag2)
             
             modelContainer.mainContext.insert(Word.examples[0])
             modelContainer.mainContext.insert(Word.examples[1])

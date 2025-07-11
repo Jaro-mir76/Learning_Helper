@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @Environment(CoordinationManager.self) private var coordinationManager    
+    @Environment(CoordinationManager.self) private var coordinationManager
     
     var body: some View {
             @Bindable var coordinator = coordinationManager

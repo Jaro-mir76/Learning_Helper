@@ -54,7 +54,8 @@ struct WordEditView: View {
                 HStack {
                     LanguagePickerView(language: $word.language)
                     Spacer()
-                    CategoryPickerView(category: $word.category)
+                    
+//                    CategoryPickerView(category: $word.category)
                 }
                 
 //            }
@@ -99,12 +100,13 @@ struct WordEditView: View {
             }
         }
         .onDisappear {
-            if !wordExist {
+            if !wordExist, word.name != "" {
                 modelContext.insert(word)
             } else {
                 modelContext.delete(word)
             }
             try? modelContext.save()
+            coordinationManager.selectedWord = nil
         }
     }
     

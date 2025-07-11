@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Tense {
+final class Tense: Sendable {
     @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
     var tenseDescription: String?

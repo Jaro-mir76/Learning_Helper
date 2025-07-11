@@ -9,19 +9,19 @@ import Foundation
 import SwiftData
 
 @Model
-class Word: Comparable {
+final class Word: Comparable, Sendable {
     @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
     var language: Language?
-    var category: Category?
+    var tags: [Tag]
     @Relationship(deleteRule: .cascade, inverse: \WordForm.origin) var forms: [WordForm]
 //    @Transient var statistics: [LearningStatistics]?
     
-    init(id: UUID = UUID(), name: String, language: Language? = nil, category: Category? = nil, forms: [WordForm] = []) {
+    init(id: UUID = UUID(), name: String, language: Language? = nil, tags: [Tag] = [], forms: [WordForm] = []) {
         self.id = id
         self.name = name
         self.language = language
-        self.category = category
+        self.tags = tags
         self.forms = forms
 //        self.statistics = statistics
     }
@@ -38,10 +38,12 @@ class Word: Comparable {
         } else {
             self.language = nil
         }
-        if let category = from.category {
-            self.category = Category(otherCategory: category)
+        if !from.tags.isEmpty {
+            for tag in from.tags {
+                self.tags.append(Tag(otherTag: tag))
+            }
         } else {
-            self.category = nil
+            self.tags = []
         }
         self.forms = []
         for form in from.forms {
@@ -81,7 +83,7 @@ extension Word {
                     ],
                     usageExamples: [
                         UsageExample(
-                            sentence: "Muchos gracias",
+                            sentence: "Muchos gracias, muchos graciasss!",
                             meaning: "Dziękuję bardzo",
                             exampleStatus: StatusCode.ok
                         )
@@ -106,11 +108,6 @@ extension Word {
                             sentence: "Yo le digo a ella algo importante.",
                             meaning: "Mówię jej coś ważnego.",
                             exampleStatus: StatusCode.ok
-                        ),
-                        UsageExample(
-                            sentence: "Yo digo algo y tu no.",
-                            meaning: "Ja mówię a ty nie.",
-                            exampleStatus: StatusCode.toBeVerified
                         )
                     ],
                     counterTest: 4,
@@ -151,8 +148,8 @@ extension Word {
                     meaning: [Meaning(meaning: "robię")],
                     usageExamples: [
                         UsageExample(
-                            sentence: "Yo digo ella algo importante.",
-                            meaning: "Mówię jej coś ważnego.",
+                            sentence: "Yo hago algo importante.",
+                            meaning: "Robię coś ważnego.",
                             exampleStatus: StatusCode.ok
                         )
                     ],

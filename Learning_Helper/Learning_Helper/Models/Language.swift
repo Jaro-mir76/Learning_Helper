@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Language: Identifiable {
+final class Language: Identifiable, Sendable {
     @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
     @Attribute(.unique) var flag: String?

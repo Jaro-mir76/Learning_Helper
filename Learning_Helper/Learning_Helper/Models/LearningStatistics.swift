@@ -13,4 +13,5 @@ struct LearningStatistics {
     var counterTests: Int
     var counterSuccess: Int
     var progressIndicator: Double
+    var lastTestDate: Date?
 }
