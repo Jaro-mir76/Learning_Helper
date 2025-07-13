@@ -14,7 +14,8 @@ class LearningEngine {
     var testContent: [TestTask]
     var activeTaskIndex: Int?
     private var wordForms: [WordForm]
-    let wordMask = "#wordMask#"
+    let wordMask = "_______"   // "#wordMask#"
+    private let problematicCharacters = ["łl", "Łl"]
     
     init(statistics: [LearningStatistics] = [], testContent: [TestTask] = [], activeTaskIndex: Int? = nil, wordForms: [WordForm] = []) {
         self.statistics = statistics
@@ -125,24 +126,119 @@ class LearningEngine {
     func initiateTask() {
         if let taskIndex = testContent.firstIndex(where: {$0.passed == nil}){
             self.activeTaskIndex = taskIndex
-            print ("new task index is \(taskIndex)")
+//            print ("new task index is \(taskIndex)")
         } else if let taskIndex = testContent.firstIndex(where: {$0.passed == false}){
             self.activeTaskIndex = taskIndex
-            print ("new task index is \(taskIndex)")
+//            print ("new task index is \(taskIndex)")
         } else {
             self.activeTaskIndex = nil
         }
     }
     
-    func checkTaskAnswer(answer: [String]) -> (Bool, String) {
-        if self.testContent[activeTaskIndex!].answers.first?.lowercased() == answer.first?.lowercased() {
+    func checkTaskAnswerAndRecordResult(answer: [String]) -> (Bool, String) {
+        //        if self.testContent[activeTaskIndex!].answers.first?.lowercased() == answer.first?.lowercased() {
+        //        if self.testContent[activeTaskIndex!].answers.first?.compare(answer.first!, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame {
+        //            wordForms.first(where: {$0.id ==  testContent[activeTaskIndex!].wordId})?.recordSuccess()
+        //            self.testContent[self.activeTaskIndex!].passed = true
+        //            return (true, "Correct answer!")
+        //        } else {
+        //            wordForms.first(where: {$0.id ==  testContent[activeTaskIndex!].wordId})?.recordFailure()
+        //            self.testContent[self.activeTaskIndex!].passed = false
+        //            return (false , "Wrong answer, correct is \(self.testContent[activeTaskIndex!].answers.first!)")
+        //        }
+        
+//        print ("provided answer is \(answer.first!)")
+        //        print ("expected answer is \(self.testContent[activeTaskIndex!].answers.first!)")
+        
+        var response = ""
+        //        let regex = try! Regex("[^\\s]\\w*")
+        //        Removing here unnecessary white spaces on the beginning and end of the answer
+        //        let answer = String(answer.first![answer.first!.firstMatch(of: regex)!.range])
+        let regexRemovePunctuation = try! Regex("[.,;:]")
+        var answer = String(answer.first!.replacing(regexRemovePunctuation, with: ""))
+        //        print ("provided answer is (after regexRemovePunctuation) \(answer)")
+        
+        let regexRemoveSpaces = try! Regex("\\s+")
+        answer = String(answer.replacing(regexRemoveSpaces, with: " "))
+        //        print ("provided answer is (after regexRemoveSpaces) \(answer)")
+        
+        let regex = try! Regex("[^\\s][\\s\\w']*[^\\W]")
+        answer = String(answer[answer.firstMatch(of: regex)!.range])
+        //        print ("provided answer is (after regex) \(answer)")
+        
+        guard var expectedAnswer = self.testContent[activeTaskIndex!].answers.first else {return (false, "No expected answer")}
+        expectedAnswer = String(expectedAnswer[expectedAnswer.firstMatch(of: regex)!.range])
+//        print ("expected answer is (after regex) \(expectedAnswer)")
+        
+//        if let expectedAnswer = self.testContent[activeTaskIndex!].answers.first,  expectedAnswer.compare(answer, options: .caseInsensitive) == .orderedSame {
+//
+        if expectedAnswer.compare(answer, options: .caseInsensitive) == .orderedSame {
+//            print ("recording success")
+            recordTaskResult(success: true)
+            return (true, "Correct answer!")
+        } else {
+//            flatAnswer -> answer where "problematic characters" like ł are replaced with characters (without diacritic)
+            var flatAnswer = answer
+//            let normalizedActiveTaskAnswer = self.testContent[activeTaskIndex!].answers.first!
+//            let expectedAnswer = expectedAnswer
+//            var normalizedActiveTaskAnswerL2 = self.testContent[activeTaskIndex!].answers.first!
+            var flatExpectedAnswer = expectedAnswer
+            
+//            In this part I use 'problematicCharacters' array to replace in user answer and expected answer problematic characters which are not managed properly by .diacriticInsensitive by compare
+            for characters in self.problematicCharacters {
+                let c1 = String(characters[characters.startIndex])
+                let c2 = String(characters[characters.index(before: characters.endIndex)])
+                flatAnswer = flatAnswer.replacingOccurrences(of: c1, with: c2)
+                flatExpectedAnswer = flatExpectedAnswer.replacingOccurrences(of: c1, with: c2)
+            }
+            if flatAnswer.compare(flatExpectedAnswer, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame {
+                response = "Pay attention to details!\n"
+                var flatAnswerIndex = flatAnswer.startIndex
+                for expectedAnswerIndex in expectedAnswer.indices {
+                    if String(flatAnswer[flatAnswerIndex]).compare(String(expectedAnswer[expectedAnswerIndex]), options: .caseInsensitive) != .orderedSame  {
+                        response += ">" + String(expectedAnswer[expectedAnswerIndex]) + "<"
+                    } else {
+                        response += String(expectedAnswer[expectedAnswerIndex])
+                    }
+                    flatAnswerIndex = flatAnswer.index(after: flatAnswerIndex)
+                    if flatAnswerIndex > flatAnswer.endIndex {
+                        recordTaskResult(success: false)
+                        return (false , "Wrong answer, correct is \(self.testContent[activeTaskIndex!].answers.first!)")
+                    }
+                }
+//                response += "\n"
+//                flatAnswerIndex = flatAnswer.startIndex
+//                for expectedAnswerIndex in expectedAnswer.indices {
+//                    if String(flatAnswer[flatAnswerIndex]).compare(String(expectedAnswer[expectedAnswerIndex]), options: .caseInsensitive) != .orderedSame {
+//                        response += ">" + String(expectedAnswer[expectedAnswerIndex]) + "<"
+//                    } else {
+//                        response += String(expectedAnswer[expectedAnswerIndex])
+//                    }
+//                    flatAnswerIndex = flatAnswer.index(after: flatAnswerIndex)
+//                    if flatAnswerIndex > flatAnswer.endIndex {
+//                        print ("recording failure")
+//                        recordTaskResult(success: false)
+//                        return (false , "Wrong answer, correct is \(self.testContent[activeTaskIndex!].answers.first!)")
+//                    }
+//                }
+//                print ("recording success with remarks")
+                recordTaskResult(success: true)
+                return (true, response)
+            } else {
+//                print ("recording failure")
+                recordTaskResult(success: false)
+                return (false , "Wrong answer, correct is \(self.testContent[activeTaskIndex!].answers.first!)")
+            }
+        }
+    }
+    
+    private func recordTaskResult(success: Bool) {
+        if success {
             wordForms.first(where: {$0.id ==  testContent[activeTaskIndex!].wordId})?.recordSuccess()
             self.testContent[self.activeTaskIndex!].passed = true
-            return (true, "Correct answer!")
         } else {
             wordForms.first(where: {$0.id ==  testContent[activeTaskIndex!].wordId})?.recordFailure()
             self.testContent[self.activeTaskIndex!].passed = false
-            return (false , "Wrong answer, correct is \(self.testContent[activeTaskIndex!].answers.first!)")
         }
     }
     
@@ -186,16 +282,21 @@ class LearningEngine {
     
     func hideWordInSentence(wordForm: String, sentence: String) -> String {
         let regex = try! Regex(wordForm + "[a-z]*")
-        let sentenceWithoutWordForm = sentence.replacing(regex, with: self.wordMask)
+        var sentenceWithoutWordForm = sentence.replacing(regex, with: self.wordMask)
+        if sentenceWithoutWordForm == sentence {
+            sentenceWithoutWordForm = sentence.lowercased().replacing(regex, with: self.wordMask)
+        }
         return sentenceWithoutWordForm
     }
     
     func findWordFormInSentence(wordForm: String, sentence: String) -> [String] {
         let regex = try! Regex(wordForm + "[a-z]*")
         var answers: [String] = []
-        let foundMatches = sentence.matches(of: regex)
+        let foundMatches = sentence.lowercased().matches(of: regex)
+//        print ("sentence (lowercased): \(sentence.lowercased())")
         for match in foundMatches {
-            answers.append(String(sentence[match.range]))
+            answers.append(String(sentence.lowercased()[match.range]))
+//            print ("answers: \(answers)")
         }
         return answers
     }

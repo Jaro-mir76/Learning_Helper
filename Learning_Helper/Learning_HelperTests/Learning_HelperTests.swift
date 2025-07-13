@@ -50,6 +50,7 @@ struct Learning_HelperTests {
     func testFillGapInSentence() throws {
         let wordForm = Word.examples.first(where: {$0.name == "gracia"})?.forms.first(where: {$0.name == "gracia"})
         let wordForm2 = Word.examples.first(where: {$0.name == "decir"})?.forms.first(where: {$0.name == "digo"})
+        let wordForm3 = Word.examples.first(where: {$0.name == "hacer"})?.forms.first(where: {$0.name == "hice"})
         let learningEngine = LearningEngine()
         
 //        test for "gracia"
@@ -70,6 +71,15 @@ struct Learning_HelperTests {
         #expect(question == "Mówię jej coś ważnego.")
         #expect(question2 == "Yo le #wordMask# a ella algo importante.")
         #expect(answer[0] == "digo")
+        
+//        test for "hice"
+        question = ""
+        question2 = ""
+        answer = []
+        (question, question2, answer) = learningEngine.fillGapInForeignSentence(wordForm: wordForm3!)
+        #expect(question == "Zrobiłem co było potrzebne." || question == "Zrobiłem coś dla siebie.")
+        #expect(question2 == "#wordMask# que fue necesito." || question2 == "#wordMask# algo para me.")
+        #expect(answer[0] == "hice")
     }
 
 }

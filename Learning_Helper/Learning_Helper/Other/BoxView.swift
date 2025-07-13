@@ -10,6 +10,7 @@ import SwiftUI
 struct BoxView: ViewModifier {
     var frame: Color = .gray
     var background: Color = .white
+    var opacity: Double = 0.2
     
     @ViewBuilder @MainActor @preconcurrency func body(content: Self.Content) -> some View {
         content
@@ -17,7 +18,7 @@ struct BoxView: ViewModifier {
             .background(
                 ZStack {
                     RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(frame, lineWidth: 1, antialiased: true)
-                    RoundedRectangle(cornerRadius: 5, style: .continuous).fill(background).opacity(0.2)
+                    RoundedRectangle(cornerRadius: 5, style: .continuous).fill(background).opacity(opacity)
                 }
             )
 //            .frame(height: 30)
@@ -47,5 +48,9 @@ extension View {
     
     func boxView(frame: Color, background: Color) -> some View {
         modifier(BoxView(frame: frame, background: background))
+    }
+    
+    func boxView(frame: Color, background: Color, opacity: Double) -> some View {
+        modifier(BoxView(frame: frame, background: background, opacity: opacity))
     }
 }
